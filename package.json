@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Backend for NUST Polls web application",
   "main": "app.js",
-  "type": "module",
   "scripts": {
     "dev": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,13 +10,6 @@
   "author": "Fatima Mujahid",
   "license": "ISC",
   "dependencies": {
-    "cors": "^2.8.5",
-    "dotenv": "^16.0.0",
-    "express": "^4.17.3",
-    "mongoose": "^6.2.3",
-    "morgan": "^1.10.0",
-    "nodemon": "^2.0.15",
-    "passport": "^0.5.2",
-    "passport-local": "^1.0.0"
+    "nodemon": "^2.0.15"
   }
 }
