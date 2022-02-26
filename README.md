@@ -1,13 +1,13 @@
 # NUST Polls
 
-This is the backend for NUST created using MERN stack. This project contains user authentication using passport js, bcrypt and json web token. For handling payments, paypal is used.
+This is the backend for NUST Polls created using MERN stack. This project contains user authentication using passport js, bcrypt and json web token.
 
 ### Features
 
 The features include:
  - User (Admin/Student) Sign in
  - Generate polls
- - View and submit polls
+ - View and Submit polls
  - Generate reports
 
 ### How to Use
