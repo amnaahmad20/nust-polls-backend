@@ -4,7 +4,10 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import morgan from 'morgan';
 import passport from 'passport';
-import passportLocal from 'passport-local';
+import { Strategy as LocalStrategy } from 'passport-local';
+import User from './models/user.js';
+import Admin from './models/admin.js';
+import userRoutes from './routes/users.js';
 
 //APP CONFIG
 
@@ -17,10 +20,83 @@ app.use(
   })
 );
 app.use(morgan('tiny'));
+app.use(passport.initialize());
 
 //DATABASE CONNECT
 
 mongoose.connect(process.env.CONNECTION_URL);
+
+passport.use(
+  new LocalStrategy((username, password, done) => {
+    User.findOne({ username: username }, (err, user) => {
+      if (err) {
+        return done(err, false, { message: err.message });
+      }
+      if (!user) {
+        return done(null, false, { message: 'User not registered' });
+      }
+      if (!User.checkPassword(password, user.password)) {
+        return done(null, false, { message: 'Incorrect password' });
+      }
+      return done(null, user, { message: 'Login successful' });
+    });
+  })
+);
+
+// app.get('/', (req, res, next) => {
+//   res.send('Hello World');
+// });
+
+// app.post('/user', (req, res, next) => {
+//   console.log('in post');
+//   User.create(req.body)
+//     .then((data) => {
+//       res.status(200).json({ data: data });
+//     })
+//     .catch((error) => {
+//       res.status(500).json({ message: error.message });
+//     });
+// });
+
+// app.get('/user', (req, res, next) => {
+//   User.find({})
+//     .then((data) => {
+//       res.send(data);
+//       console.log(data);
+//     })
+//     .catch((error) => {
+//       res.send(error);
+//       console.log(error);
+//     });
+// });
+
+//SAMPLE DATABASE RECORDS
+
+// User.create({
+//   firstName: 'Fatima',
+//   lastName: 'Mujahid',
+//   email: 'fatimamujahid01@gmail.com',
+//   username: 'fatima.mujahid',
+//   password: 'password',
+//   role: 'admin',
+// })
+//   .then((data) => {
+//     console.log(data);
+//     Admin.create({ admin: data._id, title: 'DD Hostel' })
+//       .then((data) => {
+//         console.log('SUCCESS', data);
+//       })
+//       .catch((err) => {
+//         console.log(err);
+//       });
+//   })
+//   .catch((err) => {
+//     console.log(err);
+//   });
+
+//ROUTES
+
+app.use('/user', userRoutes);
 
 //SERVER LISTEN
 

@@ -14,7 +14,6 @@ const userSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
-    unique: true,
     match:
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
   },
@@ -39,6 +38,7 @@ const userSchema = new mongoose.Schema({
 
 userSchema.pre('save', function (next) {
   this.password = bcrypt.hashSync(this.password, 10);
+  next();
 });
 
 userSchema.methods.getResetPasswordToken = function () {
