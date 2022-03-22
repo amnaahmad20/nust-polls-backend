@@ -84,7 +84,10 @@ const forgotPassword = async (req, res) => {
         subject: 'Password Reset Request',
         text: message,
       });
-      res.status(200).json({ message: 'Email sent', success: true });
+      res.status(200).json({
+        message: 'Email sent',
+        success: true,
+      });
     } catch (err) {
       user.resetPasswordToken = undefined;
       user.resetPasswordExpire = undefined;
@@ -101,6 +104,34 @@ const forgotPassword = async (req, res) => {
 
 //RESET PASSWORD CONTROLLER
 
-const resetPassword = (req, res) => {};
+const resetPassword = async (req, res) => {
+  const resetPasswordToken = crypto
+    .createHash('sha256')
+    .update(req.params.resetToken)
+    .digest('hex');
+  try {
+    const user = await User.findOne({
+      resetPasswordToken,
+      resetPasswordExpire: { $gt: Date.now() },
+    });
+    user.password = req.body.password;
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpire = undefined;
+    try {
+      await user.save();
+      res.status(201).json({
+        message: 'Password reset success',
+        success: true,
+      });
+    } catch (err) {
+      res.status(404).json({ message: err.message, success: false });
+    }
+  } catch (err) {
+    res.status(400).json({
+      message: 'Invalid token',
+      success: false,
+    });
+  }
+};
 
 export { loginUser, forgotPassword, resetPassword };
