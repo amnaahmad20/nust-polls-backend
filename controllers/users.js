@@ -26,27 +26,29 @@ const loginUser = (req, res, next) => {
         };
         if (user.role == 'admin') {
           try {
-            const data = await Admin.findOne({ admin: user._id })
+            const admin = await Admin.findOne({ admin: user._id })
               .populate('admin', '-password')
               .exec();
-            if (!data)
-              res
-                .status(404)
-                .json({ message: 'Admin does not exist', success: false });
-            res.status(200).json({ ...response, data: data });
+            if (!admin)
+              res.status(404).json({
+                message: 'Admin does not exist',
+                success: false,
+              });
+            res.status(200).json({ ...response, data: admin });
           } catch (err) {
             res.status(500).json({ message: err.message, success: false });
           }
         } else if (user.role == 'student') {
           try {
-            const data = await Student.findOne({ student: user._id })
+            const student = await Student.findOne({ student: user._id })
               .populate('student', '-password')
               .exec();
-            if (!data)
-              res
-                .status(404)
-                .json({ message: 'Student does not exist', success: false });
-            res.status(200).json({ ...response, data: data });
+            if (!student)
+              res.status(404).json({
+                message: 'Student does not exist',
+                success: false,
+              });
+            res.status(200).json({ ...response, data: student });
           } catch (err) {
             res.status(500).json({ message: err.message, success: false });
           }
@@ -63,10 +65,42 @@ const loginUser = (req, res, next) => {
 
 //FORGOT PASSWORD CONTROLLER
 
-const forgotPassword = () => {};
+const forgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const user = await User.findOne({ email });
+    if (!user)
+      res.status(404).json({
+        message: 'Email is not correct',
+        success: false,
+      });
+    const resetToken = user.getResetPasswordToken();
+    await user.save();
+    const resetUrl = `${process.env.FRONTEND_BASE_URL}/resetpassword/${resetToken}`;
+    const message = `<h1>You have requested a password reset</h1><p>Please go to this link to reset your password</p><a href="${resetUrl}" clicktracking=off>${resetUrl}</a>`;
+    try {
+      await sendEmail({
+        to: user.email,
+        subject: 'Password Reset Request',
+        text: message,
+      });
+      res.status(200).json({ message: 'Email sent', success: true });
+    } catch (err) {
+      user.resetPasswordToken = undefined;
+      user.resetPasswordExpire = undefined;
+      await user.save();
+      res.status(404).json({
+        message: 'Email can not be sent',
+        success: false,
+      });
+    }
+  } catch (err) {
+    res.status(404).json({ message: err.message, success: false });
+  }
+};
 
 //RESET PASSWORD CONTROLLER
 
-const resetPassword = () => {};
+const resetPassword = (req, res) => {};
 
 export { loginUser, forgotPassword, resetPassword };

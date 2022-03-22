@@ -17,18 +17,18 @@ router.post('/login', loginUser);
 
 //FORGOT PASSWORD ROUTE
 /**
- * @route   POST /user/password/forgot
+ * @route   POST /user/forgotpassword
  * @desc    Forgot password, send email to reset
  * @body    {email}
  */
-router.post('/password/forgot', forgotPassword);
+router.post('/forgotpassword', forgotPassword);
 
 //RESET PASSWORD ROUTE
 /**
- * @route   PUT /user/password/reset
+ * @route   PUT /user/resetpassword
  * @desc    Reset password after forgot
  * @body    {password}
  */
-router.put('/password/reset/:resetToken', resetPassword);
+router.put('/resetpassword/:resetToken', resetPassword);
 
 export default router;
