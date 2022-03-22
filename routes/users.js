@@ -15,7 +15,7 @@ const router = express.Router({ mergeParams: true });
  */
 router.post('/login', loginUser);
 
-//FORGOT PASSWORD
+//FORGOT PASSWORD ROUTE
 /**
  * @route   POST /user/password/forgot
  * @desc    Forgot password, send email to reset
@@ -23,7 +23,7 @@ router.post('/login', loginUser);
  */
 router.post('/password/forgot', forgotPassword);
 
-//RESET PASSWORD
+//RESET PASSWORD ROUTE
 /**
  * @route   PUT /user/password/reset
  * @desc    Reset password after forgot
