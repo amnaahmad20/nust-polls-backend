@@ -1,4 +1,5 @@
 import nodemailer from 'nodemailer';
+
 const { createTransport } = nodemailer;
 
 const sendEmail = (options) => {

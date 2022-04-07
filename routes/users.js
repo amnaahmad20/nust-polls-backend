@@ -5,6 +5,8 @@ import {
   resetPassword,
 } from '../controllers/users.js';
 
+// import { protect, admin } from '../middlewares/auth.js';
+
 const router = express.Router({ mergeParams: true });
 
 //LOGIN ROUTE
@@ -30,5 +32,13 @@ router.post('/forgotpassword', forgotPassword);
  * @body    {password}
  */
 router.put('/resetpassword/:resetToken', resetPassword);
+
+//MIDDLEWARE TEST ROUTE
+// router.get('/index', protect, admin, (req, res) => {
+//   res.status(200).json({
+//     message: 'Success',
+//     success: true,
+//   });
+// });
 
 export default router;
