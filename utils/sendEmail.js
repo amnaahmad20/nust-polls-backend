@@ -19,21 +19,17 @@ const sendEmail = (options) => {
     html: options.text,
   };
 
-  return new Promise((res, rej) => {
-    transporter
-      .sendMail(mailOptions)
-      .then((data) => {
-        if (
-          data &&
-          data.response &&
-          data.response.toLowerCase().includes('ok')
-        ) {
-          res({ message: 'Email sent' });
-        } else {
-          rej(new Error("Couldn't send email. Try again!"));
-        }
-      })
-      .catch((err) => rej(err));
+  return new Promise(async (res, rej) => {
+    try {
+      const data = await transporter.sendMail(mailOptions);
+      if (data && data.response && data.response.toLowerCase().includes('ok')) {
+        res({ message: 'Email sent' });
+      } else {
+        rej(new Error("Couldn't send email. Try again!"));
+      }
+    } catch (err) {
+      rej(err);
+    }
   });
 };
 
