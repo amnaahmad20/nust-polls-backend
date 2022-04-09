@@ -28,8 +28,47 @@ const studentSchema = new mongoose.Schema({
   status: {
     type: String,
     required: true,
-    enum: ['hostellite', 'dayscholar'],
+    enum: ['Hostellite', 'Dayscholar'],
   },
+  hostel: {
+    type: String,
+  },
+  transport: {
+    pickAndDrop: {
+      type: Boolean,
+    },
+    route: {
+      type: String,
+    },
+  },
+  societies: [
+    {
+      name: {
+        type: String,
+      },
+      designation: {
+        type: String,
+      },
+    },
+  ],
+});
+
+userSchema.pre('save', function (next) {
+  if (this.status === 'Hostellite' && !this.hostel) {
+    next(new Error('Hostel is required when student is hostellite'));
+  }
+  if (
+    this.status === 'Dayscholar' &&
+    this.transport.pickAndDrop &&
+    !this.transport.route
+  ) {
+    next(
+      new Error(
+        'Transport route is required when student uses pick and drop service'
+      )
+    );
+  }
+  next();
 });
 
 export default mongoose.model('Student', studentSchema);
