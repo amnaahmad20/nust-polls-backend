@@ -53,7 +53,7 @@ const studentSchema = new mongoose.Schema({
   ],
 });
 
-userSchema.pre('save', function (next) {
+studentSchema.pre('save', function (next) {
   if (this.status === 'Hostellite' && !this.hostel) {
     next(new Error('Hostel is required when student is hostellite'));
   }

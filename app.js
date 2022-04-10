@@ -6,7 +6,8 @@ import morgan from 'morgan';
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import User from './models/user.js';
-import Admin from './models/admin.js';
+// import Admin from './models/admin.js';
+// import Student from './models/student.js';
 import userRoutes from './routes/users.js';
 
 //APP CONFIG
@@ -75,14 +76,46 @@ passport.use(
 // User.create({
 //   firstName: 'Fatima',
 //   lastName: 'Mujahid',
-//   email: 'fatimamujahid01@gmail.com',
-//   username: 'fatima.mujahid',
+//   email: 'fatimamujahid12@gmail.com',
+//   username: 'fatima.mujahid12',
 //   password: 'password',
 //   role: 'admin',
 // })
 //   .then((data) => {
 //     console.log(data);
-//     Admin.create({ admin: data._id, title: 'DD Hostel' })
+//     Admin.create({ admin: data._id, title: 'DD in NUST Main Office' })
+//       .then((data) => {
+//         console.log('SUCCESS', data);
+//       })
+//       .catch((err) => {
+//         console.log(err);
+//       });
+//   })
+//   .catch((err) => {
+//     console.log(err);
+//   });
+
+// User.create({
+//   firstName: 'Fatima',
+//   lastName: 'Mujahid',
+//   email: 'fmujahid.msds21seecs@seecs.edu.pk',
+//   username: 'fmujahid.msds21seecs',
+//   password: 'password',
+//   role: 'student',
+// })
+//   .then((data) => {
+//     console.log(data);
+//     Student.create({
+//       student: data._id,
+//       batch: '2021',
+//       degree: 'MSDS',
+//       section: '6B',
+//       school: 'SEECS',
+//       department: 'DoC',
+//       status: 'Dayscholar',
+//       transport: { pickAndDrop: true, route: 'IJP Road' },
+//       societies: [{name: 'NXC' , designation: 'Executive'}]
+//     })
 //       .then((data) => {
 //         console.log('SUCCESS', data);
 //       })
