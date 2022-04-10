@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import User from '../models/user.js';
+import Admin from '../models/admin.js';
 
 //PROTECT MIDDLEWARE
 
@@ -31,8 +32,11 @@ const protect = async (req, res, next) => {
 
 //ADMIN MIDDLEWARE
 
-const admin = (req, res, next) => {
+const admin = async (req, res, next) => {
   if (req.user && req.user.role === 'admin') {
+    req.user = await Admin.findOne({ admin: req.user._id })
+      .populate('admin', '-password')
+      .exec();
     next();
   } else {
     res.status(401).json({
