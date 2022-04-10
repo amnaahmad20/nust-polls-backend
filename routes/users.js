@@ -6,6 +6,7 @@ import {
 } from '../controllers/users.js';
 
 // import { protect, admin } from '../middlewares/auth.js';
+// import userSubgroups from '../middlewares/userSubgroups.js';
 
 const router = express.Router({ mergeParams: true });
 
@@ -34,7 +35,7 @@ router.post('/forgotpassword', forgotPassword);
 router.put('/resetpassword/:resetToken', resetPassword);
 
 //MIDDLEWARE TEST ROUTE
-// router.get('/index', protect, admin, (req, res) => {
+// router.get('/index', protect, admin, userSubgroups, (req, res) => {
 //   res.status(200).json({
 //     message: 'Success',
 //     success: true,
