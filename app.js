@@ -141,7 +141,7 @@ const server = app.listen(PORT, () => {
 //DATABASE ERROR
 
 process.on('unhandledRejection', (err, promise) => {
-  console.log(`Logged Erorr ${err}`);
+  console.log(`Logged Error ${err}`);
   server.close(() => {
     process.exit(1);
   });

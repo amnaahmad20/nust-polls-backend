@@ -5,6 +5,10 @@ const studentSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   },
+  graduateLevel: {
+    type: String,
+    enum: ['UG', 'MS', 'PhD'],
+  },
   batch: {
     type: String,
     required: true,
