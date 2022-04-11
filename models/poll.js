@@ -8,7 +8,7 @@ const pollSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  description_name: {
+  description: {
       type:String,
       required: true
   }
