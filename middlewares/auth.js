@@ -34,9 +34,8 @@ const protect = async (req, res, next) => {
 
 const admin = async (req, res, next) => {
   if (req.user && req.user.role === 'admin') {
-    req.user = await Admin.findOne({ admin: req.user._id })
-      .populate('admin', '-password')
-      .exec();
+    const title = (await Admin.findOne({ admin: req.user._id })).title;
+    req.user = { ...req.user.toObject(), title };
     next();
   } else {
     res.status(401).json({
