@@ -9,6 +9,8 @@ import User from './models/user.js';
 // import Admin from './models/admin.js';
 // import Student from './models/student.js';
 import userRoutes from './routes/users.js';
+import pollRoutes from './routes/polls.js';
+
 
 //APP CONFIG
 
@@ -130,6 +132,7 @@ passport.use(
 //ROUTES
 
 app.use('/user', userRoutes);
+app.use('',pollRoutes)
 
 //SERVER LISTEN
 
