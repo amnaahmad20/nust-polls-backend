@@ -11,13 +11,14 @@ const getPolls = async (request, response) => {
     console.log(request.params)
     let polls = async () => {
         var ObjectId = mongoose.Types.ObjectId; 
-        return await Poll.find({ admin: new ObjectId(request.params.adminId) }); 
+        return await Poll.find({ admin:new ObjectId(request.params.adminId )}); 
     }
   
     try {
       response.send(polls);
     } 
     catch (error) {
+      console.log("Done")
       response.status(500).send(error);
     }
 
@@ -36,7 +37,9 @@ const getPolls = async (request, response) => {
   
             admin: new ObjectId(request.body.admin),
             poll_name: request.body.poll_name,
-            description: request.body.description
+            description: request.body.description,
+            deadline:'2020-02-02',
+            created_on:'2021-03-03'
   
           });
   
