@@ -63,7 +63,7 @@ const userSubgroups = async (req, res, next) => {
     case /^Faculty Sponsor UG Sophomore Batch-/.test(adminTitle):
       userGroup = {
         school: /-(.*)/.exec(adminTitle)[1],
-        batch: latestBatch - 1,
+        batch: (latestBatch - 1).toString(),
         graduateLevel: 'UG',
       };
       subgroups = await batchAdmin(userGroup);
@@ -72,7 +72,7 @@ const userSubgroups = async (req, res, next) => {
     case /^Faculty Sponsor UG Junior Batch-/.test(adminTitle):
       userGroup = {
         school: /-(.*)/.exec(adminTitle)[1],
-        batch: latestBatch - 2,
+        batch: (latestBatch - 2).toString(),
         graduateLevel: 'UG',
       };
       subgroups = await batchAdmin(userGroup);
@@ -81,7 +81,7 @@ const userSubgroups = async (req, res, next) => {
     case /^Faculty Sponsor UG Senior Batch-/.test(adminTitle):
       userGroup = {
         school: /-(.*)/.exec(adminTitle)[1],
-        batch: latestBatch - 3,
+        batch: (latestBatch - 3).toString(),
         graduateLevel: 'UG',
       };
       subgroups = await batchAdmin(userGroup);
@@ -99,7 +99,7 @@ const userSubgroups = async (req, res, next) => {
     case /^Faculty Sponsor PG 2nd Year Batch-/.test(adminTitle):
       userGroup = {
         school: /-(.*)/.exec(adminTitle)[1],
-        batch: latestBatch - 1,
+        batch: (latestBatch - 1).toString(),
         graduateLevel: ['MS', 'PhD'],
       };
       subgroups = await batchAdmin(userGroup);
@@ -113,10 +113,27 @@ const userSubgroups = async (req, res, next) => {
 };
 
 const batchAdmin = async (userGroup) => {
-  const degree = await Student.find(userGroup).distinct('degree');
-  const section = await Student.find(userGroup).distinct('section');
-  const department = await Student.find(userGroup).distinct('department');
-  const subgroups = { degree, section, department };
+  const data = await Student.aggregate([
+    {
+      $match: userGroup,
+    },
+    {
+      $group: {
+        _id: { department: '$department', degree: '$degree' },
+        section: { $addToSet: '$section' },
+      },
+    },
+    {
+      $group: {
+        _id: '$_id.department',
+        section: { $push: { degree: '$_id.degree', section: '$section' } },
+      },
+    },
+  ]);
+  const subgroups = data.reduce(
+    (obj, item) => ((obj[item._id] = item.section), obj),
+    {}
+  );
   return subgroups;
 };
 
