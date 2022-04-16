@@ -3,25 +3,24 @@ import mongoose from 'mongoose';
 const pollSchema = new mongoose.Schema({
   admin: {
     type: mongoose.Schema.Types.ObjectId,
-    ref:'User'
+    ref: 'User',
   },
   poll_name: {
     type: String,
     required: true,
   },
   description: {
-      type:String,
-      required: true
+    type: String,
+    required: true,
   },
   created_on: {
     type: Date,
-    required: true
+    required: true,
   },
   deadline: {
     type: Date,
-    required: true
-  }
-  
+    required: true,
+  },
 });
 
 const Poll = mongoose.model('Poll', pollSchema);

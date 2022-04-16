@@ -11,7 +11,6 @@ import User from './models/user.js';
 import userRoutes from './routes/users.js';
 import pollRoutes from './routes/polls.js';
 
-
 //APP CONFIG
 
 dotenv.config({ path: '.env' });
@@ -28,7 +27,9 @@ app.use(passport.initialize());
 //DATABASE CONNECT
 
 mongoose.connect(process.env.CONNECTION_URL).then((connection) => {
-  console.log(`Connected to Mongo database "${connection.connections[0].name}"`)
+  console.log(
+    `Connected to Mongo database "${connection.connections[0].name}"`
+  );
 });
 
 passport.use(
@@ -134,7 +135,7 @@ passport.use(
 //ROUTES
 
 app.use('/user', userRoutes);
-app.use('',pollRoutes)
+app.use('', pollRoutes);
 
 //SERVER LISTEN
 
