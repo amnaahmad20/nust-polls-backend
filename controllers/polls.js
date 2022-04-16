@@ -23,7 +23,14 @@ const getPolls = async (request, response) => {
   };
 
   const editPoll = async (request, response) => {
-    
+          try {
+              console.log(request.body)
+              await Poll.findByIdAndUpdate(request.params.id, request.body);
+              response.send("Done");
+
+          } catch (error) {
+              response.status(500).send(error);
+          }
   }
 
   
@@ -49,4 +56,4 @@ const getPolls = async (request, response) => {
   
   }
 
-  export { getPolls, createPoll }
+  export { getPolls, createPoll, editPoll }
