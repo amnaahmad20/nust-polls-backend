@@ -27,7 +27,9 @@ app.use(passport.initialize());
 
 //DATABASE CONNECT
 
-mongoose.connect(process.env.CONNECTION_URL);
+mongoose.connect(process.env.CONNECTION_URL).then((connection) => {
+  console.log(`Connected to Mongo database "${connection.connections[0].name}"`)
+});
 
 passport.use(
   new LocalStrategy((username, password, done) => {

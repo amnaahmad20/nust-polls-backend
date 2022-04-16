@@ -12,7 +12,16 @@ const pollSchema = new mongoose.Schema({
   description: {
       type:String,
       required: true
+  },
+  created_on: {
+    type: Date,
+    required: true
+  },
+  deadline: {
+    type: Date,
+    required: true
   }
+  
 });
 
 const Poll = mongoose.model('Poll', pollSchema);

@@ -1,5 +1,4 @@
 import express from "express";
-import Poll from '../models/poll.js'
 import { getPolls, createPoll } from "../controllers/polls.js";
 
 

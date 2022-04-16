@@ -9,38 +9,40 @@ const getPolls = async (request, response) => {
 
 
     console.log(request.params)
-    let polls = async () => {
-        var ObjectId = mongoose.Types.ObjectId; 
-        return await Poll.find({ admin: new ObjectId(request.params.adminId) }); 
-    }
+    var ObjectId = mongoose.Types.ObjectId; 
+    let polls = await Poll.find({ admin:new ObjectId(request.params.adminId )}); 
   
     try {
       response.send(polls);
     } 
     catch (error) {
+      console.log("Done")
       response.status(500).send(error);
     }
 
   };
 
-
+  const editPoll = async (request, response) => {
+    
+  }
 
   
   const createPoll = async (request, response) => {
 
-
-  
-    async () => {
+    
           var ObjectId = mongoose.Types.ObjectId; 
           await Poll.create({
   
             admin: new ObjectId(request.body.admin),
             poll_name: request.body.poll_name,
-            description: request.body.description
+            description: request.body.description,
+            deadline: "02-02-2022",
+            created_on:"01-01-2022"
+           
   
           });
   
-      }
+      
   
       response.send("Done")
     
