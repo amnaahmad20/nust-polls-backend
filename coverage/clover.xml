@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <coverage generated="1650184023889" clover="3.2.0">
   <project timestamp="1650184023889" name="All files">
     <metrics statements="140" coveredstatements="55" conditionals="38" coveredconditionals="3" methods="19" coveredmethods="4" elements="197" coveredelements="62" complexity="0" loc="140" ncloc="140" packages="5" files="10" classes="10"/>
+
     <package name="nust-polls-backend">
       <metrics statements="27" coveredstatements="16" conditionals="8" coveredconditionals="1" methods="6" coveredmethods="2"/>
       <file name="app.js" path="/Users/fatimatuzzehra/Desktop/nust-polls-backend/app.js">
         <metrics statements="27" coveredstatements="16" conditionals="8" coveredconditionals="1" methods="6" coveredmethods="2"/>
+
         <line num="16" count="1" type="stmt"/>
         <line num="17" count="1" type="stmt"/>
         <line num="18" count="1" type="stmt"/>
@@ -54,12 +57,14 @@
         <line num="27" count="1" type="stmt"/>
         <line num="28" count="1" type="stmt"/>
         <line num="29" count="1" type="stmt"/>
+
         <line num="30" count="1" type="stmt"/>
         <line num="32" count="0" type="stmt"/>
         <line num="36" count="1" type="stmt"/>
         <line num="37" count="0" type="stmt"/>
         <line num="38" count="0" type="stmt"/>
         <line num="46" count="0" type="stmt"/>
+
       </file>
       <file name="users.js" path="/Users/fatimatuzzehra/Desktop/nust-polls-backend/controllers/users.js">
         <metrics statements="52" coveredstatements="3" conditionals="14" coveredconditionals="0" methods="4" coveredmethods="0"/>
@@ -126,7 +131,9 @@
       <file name="poll.js" path="/Users/fatimatuzzehra/Desktop/nust-polls-backend/models/poll.js">
         <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="3" count="1" type="stmt"/>
+
         <line num="26" count="1" type="stmt"/>
+
       </file>
       <file name="student.js" path="/Users/fatimatuzzehra/Desktop/nust-polls-backend/models/student.js">
         <metrics statements="7" coveredstatements="2" conditionals="9" coveredconditionals="0" methods="1" coveredmethods="0"/>
@@ -157,10 +164,12 @@
       <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="polls.js" path="/Users/fatimatuzzehra/Desktop/nust-polls-backend/routes/polls.js">
         <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+
         <line num="4" count="1" type="stmt"/>
         <line num="6" count="1" type="stmt"/>
         <line num="8" count="1" type="stmt"/>
         <line num="10" count="1" type="stmt"/>
+
       </file>
       <file name="users.js" path="/Users/fatimatuzzehra/Desktop/nust-polls-backend/routes/users.js">
         <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
