@@ -1,6 +1,8 @@
 import Poll from '../models/poll.js';
 import mongoose from 'mongoose';
 
+
+
 const getPolls = async (request, response) => {
   console.log(request.params);
   var ObjectId = mongoose.Types.ObjectId;
@@ -14,6 +16,8 @@ const getPolls = async (request, response) => {
   }
 };
 
+
+
 const editPoll = async (request, response) => {
   try {
     console.log(request.body);
@@ -24,18 +28,25 @@ const editPoll = async (request, response) => {
   }
 };
 
+
+
+
 const createPoll = async (request, response) => {
-  var ObjectId = mongoose.Types.ObjectId;
-  await Poll.create({
-    admin: new ObjectId(request.body.admin),
-    poll_name: request.body.poll_name,
-    description: request.body.description,
-    deadline: '02-02-2022',
-    created_on: '01-01-2022',
-  });
+
+   var ObjectId = mongoose.Types.ObjectId;
+    await Poll.create({
+      admin: new ObjectId(request.body.admin),
+      poll_name: request.body.poll_name,
+      description: request.body.description,
+      deadline: request.body.deadline,
+      created_on: new Date,
+    });
 
   response.send('Done');
 };
+
+
+
 
 const populatePoll = async (request, response) => {
   try{
