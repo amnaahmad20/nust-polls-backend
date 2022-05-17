@@ -7,7 +7,6 @@ import { request } from 'express';
 
 
 const getPolls = async (request, response) => {
-  console.log(request.params);
   var ObjectId = mongoose.Types.ObjectId;
   let polls = await Poll.find({ admin: new ObjectId(request.params.adminId) });
 
@@ -61,11 +60,11 @@ const createPoll = async (request, response) => {
    var ObjectId = mongoose.Types.ObjectId;
    
    var newPoll = await Poll.create({
-      admin: new ObjectId(request.body.admin),
-      poll_name: request.body.poll_name,
-      description: request.body.description,
-      deadline: request.body.deadline,
-      created_on: request.body.created_on
+      admin: new ObjectId(request.user._id),
+      poll_name: "Untitled",
+      description: "No Description",
+      deadline: new Date,
+      created_on: new Date
     });
 
   response.send(newPoll);
