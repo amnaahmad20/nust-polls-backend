@@ -51,7 +51,7 @@ export const deletePoll = async (request, response) => {
         await Poll.deleteOne({_id: request.params.id});
         response.send('Deleted');
     } catch (error) {
-        response.status(500).send(error);
+        response.status(200).send(error);
     }
 };
 

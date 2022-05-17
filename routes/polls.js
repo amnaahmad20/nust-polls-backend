@@ -10,7 +10,7 @@ pollRoutes.post('/polls/create', protect, admin, createPoll);
 
 pollRoutes.post('/polls/edit/:id', protect, admin, editPoll);
 
-pollRoutes.post('/polls/delete/:id', protect, admin, deletePoll);
+pollRoutes.delete('/polls/delete/:id', protect, admin, deletePoll);
 
 pollRoutes.post('/polls/edit-ques/:id', protect, admin, editPollQues);
 
