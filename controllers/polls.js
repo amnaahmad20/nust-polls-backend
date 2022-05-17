@@ -22,7 +22,7 @@ const getDetails = async (request, response) => {
     var ObjectId = mongoose.Types.ObjectId;
     let ques = await PollQues.find({poll: new ObjectId(request.params.id)});
     let resp = await pollResponse.find({poll: new ObjectId(request.params.id)})
-    var details = {questions: ques, responses: resp}
+    var details = {questions: ques[0], responses: resp[0]}
     try {
         response.send(details);
     } catch (error) {
