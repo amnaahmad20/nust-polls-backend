@@ -40,7 +40,6 @@ const editPoll = async (request, response) => {
 
 
 const createPoll = async (request, response) => {
-
    var ObjectId = mongoose.Types.ObjectId;
     await Poll.create({
       admin: new ObjectId(request.body.admin),
@@ -52,7 +51,6 @@ const createPoll = async (request, response) => {
 
   response.send('Done');
 };
-
 
 
 
