@@ -56,14 +56,15 @@ const editPoll = async (request, response) => {
 
 
 const createPoll = async (request, response) => {
-   var ObjectId = mongoose.Types.ObjectId;
+   let ObjectId = mongoose.Types.ObjectId;
    
-   var newPoll = await Poll.create({
+   let newPoll = await Poll.create({
       admin: new ObjectId(request.user._id),
       poll_name: "Untitled",
       description: "No Description",
       deadline: new Date,
-      created_on: new Date
+      created_on: new Date,
+      published: false
     });
 
   response.send(newPoll);
