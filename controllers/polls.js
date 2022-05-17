@@ -1,6 +1,7 @@
 import Poll from '../models/poll.js';
 import PollQues from '../models/poll-questions.js';
 import Admin from '../models/admin.js'
+import pollResponse from '../models/response.js';
 import mongoose from 'mongoose';
 import { request } from 'express';
 
@@ -13,12 +14,28 @@ const getPolls = async (request, response) => {
   try {
     response.send(polls);
   } catch (error) {
-    console.log('Done');
+    console.log('Failure');
     response.status(500).send(error);
   }
 
   
 };
+
+const getDetails = async (request, response) => {
+    var ObjectId = mongoose.Types.ObjectId;
+    let ques = await PollQues.find( {poll: new ObjectId(request.params.id)} );
+    let resp = await pollResponse.find( {poll: new ObjectId(request.params.id)} )
+    var details = { questions:ques, responses:resp }
+    try {
+      response.send(details);
+    } 
+    catch (error) {
+      console.log('Failure');
+      response.status(500).send(error);
+    }
+
+
+}
 
 
 
@@ -41,15 +58,16 @@ const editPoll = async (request, response) => {
 
 const createPoll = async (request, response) => {
    var ObjectId = mongoose.Types.ObjectId;
-    await Poll.create({
+   
+   var newPoll = await Poll.create({
       admin: new ObjectId(request.body.admin),
       poll_name: request.body.poll_name,
       description: request.body.description,
       deadline: request.body.deadline,
-      created_on: new Date,
+      created_on: request.body.created_on
     });
 
-  response.send('Done');
+  response.send(newPoll);
 };
 
 
@@ -60,6 +78,7 @@ const populatePoll = async (request, response) => {
     await PollQues.create(
       request.body
     )
+    
     response.send("Done")
 
   } catch(err){
@@ -72,4 +91,4 @@ const populatePoll = async (request, response) => {
 
 }
 
-export { getPolls, createPoll, editPoll, populatePoll };
+export { getPolls, createPoll, editPoll, populatePoll, getDetails };

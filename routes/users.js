@@ -4,6 +4,7 @@ import {
   forgotPassword,
   resetPassword,
 } from '../controllers/users.js';
+import { protect } from '../middlewares/auth.js';
 
 // import { protect, admin } from '../middlewares/auth.js';
 // import { userSubgroups, pollAudience } from '../middlewares/userGroups.js';
@@ -36,13 +37,13 @@ router.put('/resetpassword/:resetToken', resetPassword);
 
 //MIDDLEWARE TEST ROUTEs
 
-// router.get('/index', protect, admin, userSubgroups, (req, res) => {
-//   res.status(200).json({
-//     message: 'Success',
-//     success: true,
-//     data: req.subgroups,
-//   });
-// });
+router.get('/index',  protect, (req, res) => {
+  res.status(200).json({
+     message: 'Success',
+     success: true,
+     data: req.subgroups,
+   });
+ });
 
 // router.post('/index2', protect, admin, pollAudience, (req, res) => {
 //   res.status(200).json({
