@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 const pollQSchema = new mongoose.Schema({
   poll: {
     type: mongoose.Schema.Types.ObjectId,
+    unique: true,
     ref: 'Poll',
   },
   text_based: {
