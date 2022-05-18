@@ -3,28 +3,25 @@ import PollQues from '../models/poll-questions.js';
 import pollResponse from '../models/response.js';
 import mongoose from 'mongoose';
 
-
 const getPolls = async (request, response) => {
-    var ObjectId = mongoose.Types.ObjectId;
-    let polls = await Poll.find({admin: new ObjectId(request.params.adminId)});
+  var ObjectId = mongoose.Types.ObjectId;
+  let polls = await Poll.find({ admin: new ObjectId(request.params.adminId) });
 
-    try {
-        response.send(polls);
-    } catch (error) {
-        console.log('Failure');
-        response.status(500).send(error);
-    }
-
-
+  try {
+    response.status(200).send(polls);
+  } catch (error) {
+    console.log('Failure');
+    response.status(500).send(error);
+  }
 };
 
 const getDetails = async (request, response) => {
     var ObjectId = mongoose.Types.ObjectId;
     let ques = await PollQues.find({poll: new ObjectId(request.params.id)});
     let resp = await pollResponse.find({poll: new ObjectId(request.params.id)})
-    var details = {questions: ques, responses: resp}
+    var details = {questions: ques[0], responses: resp[0]}
     try {
-        response.send(details);
+        response.status(200).send(details);
     } catch (error) {
         console.log('Failure');
         response.status(500).send(error);
@@ -53,14 +50,14 @@ export const getQues = async (request, response) => {
 
 
 const editPoll = async (request, response) => {
-    try {
-        console.log(request.body);
-        console.log(request.params);
-        await Poll.findByIdAndUpdate(request.params.id, request.body);
-        response.send('Done');
-    } catch (error) {
-        response.status(500).send(error);
-    }
+  try {
+    console.log(request.body);
+    console.log(request.params);
+    await Poll.findByIdAndUpdate(request.params.id, request.body);
+    response.status(200).send('Done');
+  } catch (error) {
+    response.status(500).send(error);
+  }
 };
 
 export const deletePoll = async (request, response) => {
@@ -69,7 +66,7 @@ export const deletePoll = async (request, response) => {
         console.log(request.params);
         await Poll.deleteOne({_id: new ObjectId(request.params.id)});
         await PollQues.deleteOne({poll: new ObjectId(request.params.id)});
-        response.send('Deleted');
+        response.status(200).send('Deleted');
     } catch (error) {
         response.status(200).send(error);
     }
@@ -81,7 +78,7 @@ export const editPollQues = async (request, response) => {
         console.log(request.body);
         console.log(request.params);
         await PollQues.findByIdAndUpdate( request.params.id, request.body);
-        response.send('Done');
+        response.status(200).send('Done');
     } catch (error) {
         response.status(500).send(error);
     }
@@ -90,20 +87,19 @@ export const editPollQues = async (request, response) => {
 };
 
 const createPoll = async (request, response) => {
-    let ObjectId = mongoose.Types.ObjectId;
+  let ObjectId = mongoose.Types.ObjectId;
 
-    let newPoll = await Poll.create({
-        admin: new ObjectId(request.user._id),
-        poll_name: "Untitled",
-        description: "No Description",
-        deadline: new Date,
-        created_on: new Date,
-        published: false
-    });
+  let newPoll = await Poll.create({
+    admin: new ObjectId(request.user._id),
+    poll_name: 'Untitled',
+    description: 'No Description',
+    deadline: new Date(),
+    created_on: new Date(),
+    published: false,
+  });
 
-    response.send(newPoll);
+  response.status(200).send(newPoll);
 };
-
 
 const populatePoll = async (request, response) => {
     try {
@@ -120,11 +116,11 @@ const populatePoll = async (request, response) => {
                 ]
             }
         )
-        response.send(newQuestions)
+        response.status(200).send(newQuestions)
     } catch (err) {
         console.log(err)
         response.status(500).send(error);
     }
 }
 
-export {getPolls, createPoll, editPoll, populatePoll, getDetails};
+export { getPolls, createPoll, editPoll, populatePoll, getDetails };
