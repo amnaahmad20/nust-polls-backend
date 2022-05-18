@@ -29,9 +29,27 @@ const getDetails = async (request, response) => {
         console.log('Failure');
         response.status(500).send(error);
     }
-
-
 }
+
+export const getQues = async (request, response) => {
+    var ObjectId = mongoose.Types.ObjectId;
+    console.log(request.params)
+    let ques = await PollQues.find({poll: new ObjectId(request.params.id)});
+    let polls = await Poll.find({_id: new ObjectId(request.params.id)});
+    var details = {
+        published: polls[0].published,
+        poll_name: polls[0].poll_name,
+        description: polls[0].description,
+        questions: ques,
+    }
+    try {
+        response.send(details);
+    } catch (error) {
+        console.log('Failure');
+        response.status(500).send(error);
+    }
+}
+
 
 
 const editPoll = async (request, response) => {
@@ -47,8 +65,10 @@ const editPoll = async (request, response) => {
 
 export const deletePoll = async (request, response) => {
     try {
+        var ObjectId = mongoose.Types.ObjectId;
         console.log(request.params);
-        await Poll.deleteOne({_id: request.params.id});
+        await Poll.deleteOne({_id: new ObjectId(request.params.id)});
+        await PollQues.deleteOne({poll: new ObjectId(request.params.id)});
         response.send('Deleted');
     } catch (error) {
         response.status(200).send(error);
@@ -60,7 +80,7 @@ export const editPollQues = async (request, response) => {
     try {
         console.log(request.body);
         console.log(request.params);
-        await PollQues.findByIdAndUpdate(request.params.id, request.body);
+        await PollQues.findByIdAndUpdate( request.params.id, request.body);
         response.send('Done');
     } catch (error) {
         response.status(500).send(error);
@@ -87,8 +107,10 @@ const createPoll = async (request, response) => {
 
 const populatePoll = async (request, response) => {
     try {
+        let ObjectId = mongoose.Types.ObjectId;
         let newQuestions = await PollQues.create(
             {
+                poll: new ObjectId(request.body.poll),
                 mcq: [],
                 text_based: [
                     {

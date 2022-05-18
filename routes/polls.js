@@ -1,5 +1,14 @@
 import express from 'express';
-import { getPolls, createPoll, editPoll, deletePoll, editPollQues, populatePoll, getDetails } from '../controllers/polls.js';
+import {
+    getPolls,
+    createPoll,
+    editPoll,
+    deletePoll,
+    editPollQues,
+    populatePoll,
+    getDetails,
+    getQues
+} from '../controllers/polls.js';
 import { protect, admin } from '../middlewares/auth.js';
 
 
@@ -19,6 +28,8 @@ pollRoutes.post('/polls/populate', protect, admin, populatePoll)
 pollRoutes.get('/polls/:adminId', protect, admin, getPolls);
 
 pollRoutes.get('/polls/details/:id', protect, admin, getDetails)
+
+pollRoutes.get('/polls/ques/:id', protect, admin, getQues)
 
 
 export default pollRoutes;
