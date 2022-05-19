@@ -2,7 +2,9 @@ import Poll from '../models/poll.js';
 import PollQues from '../models/poll-questions.js';
 import pollResponse from '../models/response.js';
 import mongoose from 'mongoose';
-
+import Student from "../models/student.js"
+import Admin from "../models/admin.js"
+import { request } from 'express';
 const getPolls = async (request, response) => {
   var ObjectId = mongoose.Types.ObjectId;
   let polls = await Poll.find({ admin: new ObjectId(request.params.adminId) });
@@ -163,6 +165,66 @@ const populatePoll = async (request, response) => {
         console.log(err)
         response.status(500).send(error);
     }
+}
+
+export const addStudentResponse = async (request, response) =>{
+    try{
+        let resp = await pollResponse.find({ poll: new mongoose.Types.ObjectId(request.params.pollId) })[0]
+        let questions = resp[request.body.type].copy()
+        questions = questions.map( ques => ques.index )
+        let index = questions.indexOf(request.body.index)
+        resp[request.body.type][index].responses.push(request.body.response)
+        await pollResponse.findByIdAndUpdate(resp._id.valueOf(), resp)
+        response.send("Done")
+}
+    catch(err){
+        
+        console.log(err)
+        response.send("ERROR ADDING RESPONSE")
+    }
+
+
+}
+
+export const getStudentPolls = async (request, response) => {
+    let groupMap = {
+        'DD Hostel':{status: 'Hostellite'},
+        'DD Student Affairs':{},
+        'DD Transport': { transport:{
+            pickAndDrop:true
+        } },
+        'Faculty Sponsor-SEECS': {
+            school: 'SEECS'
+        },
+        'Faculty Sponsor UG Freshman Batch-SEECS': { batch: "2021", graduateLevel:"UG" },
+        'Faculty Sponsor UG Sophomore Batch-SEECS': { batch: "2020", graduateLevel:"UG" },
+        'Faculty Sponsor UG Junior Batch-SEECS': { batch: "2019", graduateLevel:"UG" },
+        'Faculty Sponsor UG Senior Batch-SEECS': { batch: "2018", graduateLevel:"UG" },
+        'Faculty Sponsor PG 1st Year Batch-SEECS': { batch: "2020", graduateLevel:"MS" },
+        'Faculty Sponsor PG 2nd Year Batch-SEECS': { batch: "2021", graduateLevel:"MS" },
+        'DD in NUST Main Office':{}
+    }
+    try{
+        let admins = []
+        for( let admin in groupMap ){
+            let students = await Student.find(groupMap[admin]);
+            let ids = students.map(std => std._id.valueOf())
+            if (ids.includes(req.user._id)){
+                admins.push(admin)
+            }
+
+        }
+        let adminList = await Admin.find({ title: {$in: admins}})
+        adminList = adminList.map( adm => adm.admin.valueOf() )
+        let polls = await Poll.find({ admin:{$in:adminList} })
+        response.send(polls) 
+}
+    catch(err){
+        console.log(err)
+        response.send("ERROR FETCHING POLLS")
+    }
+    
+
 }
 
 export { getPolls, createPoll, editPoll, populatePoll, getDetails };

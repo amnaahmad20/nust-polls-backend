@@ -8,9 +8,11 @@ import {
     populatePoll,
     getDetails,
     getQues,
-    createResponse
+    createResponse,
+    getStudentPolls,
+    addStudentResponse
 } from '../controllers/polls.js';
-import { protect, admin } from '../middlewares/auth.js';
+import { protect, admin, student } from '../middlewares/auth.js';
 
 
 const pollRoutes = express.Router({ mergeParams: true });
@@ -33,6 +35,10 @@ pollRoutes.get('/polls/details/:id', protect, admin, getDetails)
 pollRoutes.get('/polls/finalize/:id', protect, admin, createResponse)
 
 pollRoutes.get('/polls/ques/:id', protect, admin, getQues)
+
+pollRoutes.get('/polls/student/:id', protect, student, getStudentPolls)
+
+pollRoutes.post('/polls/student/response/:pollId', protect, student, addStudentResponse)
 
 
 export default pollRoutes;
