@@ -7,7 +7,8 @@ import {
     editPollQues,
     populatePoll,
     getDetails,
-    getQues
+    getQues,
+    createResponse
 } from '../controllers/polls.js';
 import { protect, admin } from '../middlewares/auth.js';
 
@@ -28,6 +29,8 @@ pollRoutes.post('/polls/populate', protect, admin, populatePoll)
 pollRoutes.get('/polls/:adminId', protect, admin, getPolls);
 
 pollRoutes.get('/polls/details/:id', protect, admin, getDetails)
+
+pollRoutes.get('/polls/finalize/:id', protect, admin, createResponse)
 
 pollRoutes.get('/polls/ques/:id', protect, admin, getQues)
 

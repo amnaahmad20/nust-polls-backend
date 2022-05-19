@@ -16,7 +16,7 @@ const getPolls = async (request, response) => {
 };
 
 const getDetails = async (request, response) => {
-    var ObjectId = mongoose.Types.ObjectId;
+    let ObjectId = mongoose.Types.ObjectId;
     let ques = await PollQues.find({poll: new ObjectId(request.params.id)});
     let resp = await pollResponse.find({poll: new ObjectId(request.params.id)})
     var details = {questions: ques[0], responses: resp[0]}
@@ -26,6 +26,47 @@ const getDetails = async (request, response) => {
         console.log('Failure');
         response.status(500).send(error);
     }
+}
+
+export const createResponse = async (request, response) => {
+    let ObjectId = mongoose.Types.ObjectId;
+    let _poll = new ObjectId(request.params.id);
+
+    try{
+        let pollQ = PollQues.find( {poll: _poll} )[0]
+        let pollResp = {
+            poll: _poll,
+            text_based : [],
+            mcq : []  
+        }
+
+        for(let i = 0; i < pollQ.mcq.length; i++){
+            pollResp.mcq[i] = {
+                index : parseInt(pollQ.mcq[i].index),
+                responses : []
+            }
+        }
+
+        for(let i = 0; i < pollQ.text_based.length; i++){
+            pollResp.text_based[i] = {
+                index : parseInt(pollQ.text_based[i].index),
+                responses : []
+            }
+        } 
+        
+        let pollRes = await pollResponse.create(pollResp)
+        response.send(pollRes)
+
+
+}
+
+    catch(err) {
+        response.send("Error")
+    }
+
+
+
+
 }
 
 export const getQues = async (request, response) => {
