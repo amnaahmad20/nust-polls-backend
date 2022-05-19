@@ -136,6 +136,7 @@ const createPoll = async (request, response) => {
     description: 'No Description',
     deadline: new Date(),
     created_on: new Date(),
+    published_on: new Date(),
     published: false,
   });
 
