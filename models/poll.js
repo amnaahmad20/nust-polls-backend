@@ -24,7 +24,12 @@ const pollSchema = new mongoose.Schema({
   published: {
     type: Boolean,
     required: true
+  },
+  published_on: {
+    type: Date,
+    required: true
   }
+
 });
 
 const Poll = mongoose.model('Poll', pollSchema);
