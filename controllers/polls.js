@@ -170,10 +170,12 @@ const populatePoll = async (request, response) => {
 export const addStudentResponse = async (request, response) =>{
     try{
         let resp = await pollResponse.find({ poll: new mongoose.Types.ObjectId(request.params.pollId) })[0]
-        let questions = resp[request.body.type].copy()
-        questions = questions.map( ques => ques.index )
-        let index = questions.indexOf(request.body.index)
-        resp[request.body.type][index].responses.push(request.body.response)
+        for(let n = 0; n < request.body.length; n++){
+            let questions = resp[request.body[n].type].copy()
+            questions = questions.map( ques => ques.index )
+            let index = questions.indexOf(request.body.index)
+            resp[request.body[n].type][index].responses.push(request.body[n].response)
+    }
         await pollResponse.findByIdAndUpdate(resp._id.valueOf(), resp)
         response.send("Done")
 }
