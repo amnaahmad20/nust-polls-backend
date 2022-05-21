@@ -208,8 +208,8 @@ export const getStudentPolls = async (request, response) => {
         let admins = []
         for( let admin in groupMap ){
             let students = await Student.find(groupMap[admin]);
-            let ids = students.map(std => std._id.valueOf())
-            if (ids.includes(req.user._id)){
+            let ids = students.map(std => std.student.valueOf())
+            if (ids.includes(request.user._id.valueOf())){
                 admins.push(admin)
             }
 
