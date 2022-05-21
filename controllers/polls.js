@@ -32,26 +32,28 @@ const getDetails = async (request, response) => {
 
 export const createResponse = async (request, response) => {
     let ObjectId = mongoose.Types.ObjectId;
-    let _poll = new ObjectId(request.params.id);
 
     try{
-        let pollQ = PollQues.find( {poll: _poll} )[0]
+        let pollQ = await PollQues.find({poll: new ObjectId(request.params.id)});
+
         let pollResp = {
-            poll: _poll,
+            poll: new ObjectId(request.params.id),
             text_based : [],
             mcq : []  
         }
 
-        for(let i = 0; i < pollQ.mcq.length; i++){
+
+
+        for(let i = 0; i < pollQ[0].mcq.length; i++){
             pollResp.mcq[i] = {
-                index : parseInt(pollQ.mcq[i].index),
+                index : parseInt(pollQ[0].mcq[i].index),
                 responses : []
             }
         }
 
-        for(let i = 0; i < pollQ.text_based.length; i++){
+        for(let i = 0; i < pollQ[0].text_based.length; i++){
             pollResp.text_based[i] = {
-                index : parseInt(pollQ.text_based[i].index),
+                index : parseInt(pollQ[0].text_based[i].index),
                 responses : []
             }
         } 
@@ -63,6 +65,7 @@ export const createResponse = async (request, response) => {
 }
 
     catch(err) {
+        console.log(err)
         response.send("Error")
     }
 
