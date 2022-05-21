@@ -172,7 +172,8 @@ const populatePoll = async (request, response) => {
 
 export const addStudentResponse = async (request, response) =>{
     try{
-        let resp = await pollResponse.find({ poll: new mongoose.Types.ObjectId(request.params.pollId) })[0]
+        let resp = await pollResponse.find({ poll: new mongoose.Types.ObjectId(request.params.pollId) })
+        resp = resp[0]
         for(let n = 0; n < request.body.length; n++){
             let questions = resp[request.body[n].type].copy()
             questions = questions.map( ques => ques.index )
