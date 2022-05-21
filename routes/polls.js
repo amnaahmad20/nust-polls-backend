@@ -28,6 +28,10 @@ pollRoutes.post('/polls/edit-ques/:id', protect, admin, editPollQues);
 
 pollRoutes.post('/polls/populate', protect, admin, populatePoll)
 
+pollRoutes.get('/polls/student', protect, student, getStudentPolls)
+
+pollRoutes.post('/polls/student/response/:pollId', protect, student, addStudentResponse)
+
 pollRoutes.get('/polls/:adminId', protect, admin, getPolls);
 
 pollRoutes.get('/polls/details/:id', protect, admin, getDetails)
@@ -36,9 +40,7 @@ pollRoutes.get('/polls/finalize/:id', protect, admin, createResponse)
 
 pollRoutes.get('/polls/ques/:id', protect, admin, getQues)
 
-pollRoutes.get('/polls/student/:id', protect, student, getStudentPolls)
 
-pollRoutes.post('/polls/student/response/:pollId', protect, student, addStudentResponse)
 
 
 export default pollRoutes;
