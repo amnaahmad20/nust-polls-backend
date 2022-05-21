@@ -38,7 +38,7 @@ pollRoutes.get('/polls/details/:id', protect, admin, getDetails)
 
 pollRoutes.get('/polls/finalize/:id', protect, admin, createResponse)
 
-pollRoutes.get('/polls/ques/:id', protect, admin, getQues)
+pollRoutes.get('/polls/ques/:id', protect, getQues)
 
 
 
