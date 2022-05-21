@@ -214,6 +214,7 @@ export const getStudentPolls = async (request, response) => {
                 admins.push(admin)
             }
 
+
         }
         let adminList = await Admin.find({ title: {$in: admins}})
         adminList = adminList.map( adm => adm.admin.valueOf() )
