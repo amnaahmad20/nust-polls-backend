@@ -177,6 +177,7 @@ export const addStudentResponse = async (request, response) =>{
         for(let n = 0; n < request.body.answers.length; n++){
             let questions = resp[request.body.answers[n].type].copy()
             questions = questions.map( ques => ques.index )
+            
             let index = questions.indexOf(request.body.answers[n].index)
             resp[request.body.answers[n].type][index].responses.push(request.body.answers[n].response)
     }
