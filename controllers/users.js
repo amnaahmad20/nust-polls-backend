@@ -74,7 +74,7 @@ const forgotPassword = async (req, res) => {
         message: 'Email is not correct',
         success: false,
       });
-    const resetToken = 'b515743836cb352ba66bfee9895d1a84f53a3722';
+    const resetToken = user.getResetPasswordToken();
     await user.save();
     const resetUrl = `${process.env.FRONTEND_BASE_URL}/resetpassword/${resetToken}`;
     const message = `<h1>You have requested a password reset</h1><p>Please go to this link to reset your password</p><a href="${resetUrl}" clicktracking=off>${resetUrl}</a>`;
