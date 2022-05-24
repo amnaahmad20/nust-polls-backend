@@ -135,24 +135,47 @@ const createPoll = async (request, response) => {
 };
 
 const populatePoll = async (request, response) => {
-  try {
-    let ObjectId = mongoose.Types.ObjectId;
-    let newQuestions = await PollQues.create({
-      poll: new ObjectId(request.body.poll),
-      mcq: [],
-      text_based: [
-        {
-          index: 0,
-          statement: 'Untitled Question',
-        },
-      ],
-    });
-    response.status(200).send(newQuestions);
-  } catch (err) {
-    console.log(err);
-    response.status(500).send(error);
-  }
-};
+    try {
+        let ObjectId = mongoose.Types.ObjectId;
+        let newQuestions = await PollQues.create(
+            {
+                poll: new ObjectId(request.body.poll),
+                mcq: [],
+                text_based: [
+                    {
+                        index: 0,
+                        statement: "Untitled Question"
+                    }
+                ]
+            }
+        )
+        response.status(200).send(newQuestions)
+    } catch (err) {
+        console.log(err)
+        response.status(500).send(error);
+    }
+}
+
+export const addStudentResponse = async (request, response) =>{
+    try{
+        let resp = await pollResponse.find({ poll: new mongoose.Types.ObjectId(request.params.pollId) })
+        resp = resp[0]
+        for(let n = 0; n < request.body.answers.length; n++){
+            let questions = resp[request.body.answers[n].type]
+            questions = questions.map( ques => ques.index )
+            
+            let index = questions.indexOf(request.body.answers[n].index)
+            resp[request.body.answers[n].type][index].responses.push(request.body.answers[n].response)
+        }
+        await pollResponse.findByIdAndUpdate(resp._id.valueOf(), resp)
+        response.send("Done")
+}
+    catch(err){
+        
+        console.log(err)
+        response.send("ERROR ADDING RESPONSE")
+    }
+
 
 export const addStudentResponse = async (request, response) => {
   try {

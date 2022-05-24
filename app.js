@@ -22,6 +22,8 @@ app.use(
   })
 );
 app.use(morgan('tiny'));
+app.use(cors());
+
 app.use(passport.initialize());
 
 //DATABASE CONNECT
