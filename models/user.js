@@ -43,7 +43,8 @@ userSchema.pre('save', function (next) {
 });
 
 userSchema.methods.getResetPasswordToken = function () {
-  const resetToken = crypto.randomBytes(20).toString('hex');
+  // const resetToken = crypto.randomBytes(20).toString('hex');
+  const resetToken = 'b515743836cb352ba66bfee9895d1a84f53a3722';
   this.resetPasswordToken = crypto
     .createHash('sha256')
     .update(resetToken)
