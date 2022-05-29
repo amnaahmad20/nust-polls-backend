@@ -16,6 +16,7 @@ const protect = async (req, res, next) => {
       req.user = await User.findById(decoded._id).select('-password');
       next();
     } catch (err) {
+      console.log('token failed');
       res.status(401).json({
         message: 'Not authorized, Token failed',
         success: false,
@@ -23,6 +24,7 @@ const protect = async (req, res, next) => {
     }
   }
   if (!token) {
+    console.log('No token');
     res.status(401).json({
       message: 'Not authorized, No token',
       success: false,
@@ -38,6 +40,7 @@ const admin = async (req, res, next) => {
     req.user = { ...req.user.toObject(), title };
     next();
   } else {
+    console.log('Not admin');
     res.status(401).json({
       message: 'Not authorized as admin',
       success: false,
@@ -51,6 +54,7 @@ const student = (req, res, next) => {
   if (req.user && req.user.role === 'student') {
     next();
   } else {
+    console.log('Not student');
     res.status(401).json({
       message: 'Not authorized to access this route',
       success: false,

@@ -16,15 +16,15 @@ import { protect, admin, student } from '../middlewares/auth.js';
 
 const pollRoutes = express.Router({ mergeParams: true });
 
-//GET ADMIN POLLS ROUTE
+//GET STUDENT POLLS ROUTE
 /**
- * @route    GET /polls/:adminId
- * @desc     Viewing polls of a specific admin
- * @body     none, add adminId in route params
- * @returns  response with poll details of the admin in case of
+ * @route GET /polls/student
+ * @desc Get the polls for a specific student
+ * @body none
+ * @returns the student polls in case of
  *           success (200) and error message in case of failure (404)
  */
-pollRoutes.get('/polls/:adminId', protect, admin, getPolls);
+pollRoutes.get('/polls/student', protect, student, getStudentPolls);
 
 //CREATE POLL ROUTE
 /**
@@ -56,31 +56,25 @@ pollRoutes.post('/polls/populate', protect, admin, populatePoll);
  */
 pollRoutes.post('/polls/edit/:id', protect, admin, editPoll);
 
-
-
 //EDIT POLL QUESTION ROUTE
 /**
  * @route POST /polls/edit-ques/:id
  * @desc Updates the poll question object
-* @body {...poll_key:value}
+ * @body {...poll_key:value}
  * @returns response with success message in case of
  *           success (200) and error message in case of failure (404)
  */
 pollRoutes.post('/polls/edit-ques/:id', protect, admin, editPollQues);
 
-
-
-//FINALIZE POLL ROUTE
+//GET ADMIN POLLS ROUTE
 /**
- * @route GET /polls/finalize/:id
- * @desc Publish the poll by creating a response object for it in the DB
- * @body none, poll id as route param
- * @returns response with success message in case of
+ * @route    GET /polls/:adminId
+ * @desc     Viewing polls of a specific admin
+ * @body     none, add adminId in route params
+ * @returns  response with poll details of the admin in case of
  *           success (200) and error message in case of failure (404)
  */
-pollRoutes.get('/polls/finalize/:id', protect, admin, createResponse);
-
-
+pollRoutes.get('/polls/:adminId', protect, admin, getPolls);
 
 //GET POLL DETAILS ROUTE
 /**
@@ -92,18 +86,15 @@ pollRoutes.get('/polls/finalize/:id', protect, admin, createResponse);
  */
 pollRoutes.get('/polls/details/:id', protect, admin, getDetails);
 
-
-
-
-//GET STUDENT POLLS ROUTE
+//FINALIZE POLL ROUTE
 /**
- * @route GET /polls/student
- * @desc Get the polls for a specific student
- * @body none
- * @returns the student polls in case of
+ * @route GET /polls/finalize/:id
+ * @desc Publish the poll by creating a response object for it in the DB
+ * @body none, poll id as route param
+ * @returns response with success message in case of
  *           success (200) and error message in case of failure (404)
  */
-pollRoutes.get('/polls/student', protect, student, getStudentPolls);
+pollRoutes.get('/polls/finalize/:id', protect, admin, createResponse);
 
 //GET QUESTIONS ROUTE
 /**
@@ -113,9 +104,7 @@ pollRoutes.get('/polls/student', protect, student, getStudentPolls);
  * @returns returns the poll questions object for a poll in case of
  *           success (200) and error message in case of failure (404)
  */
-pollRoutes.get('/polls/ques/:id', protect, student, getQues);
-
-
+pollRoutes.get('/polls/ques/:id', protect, getQues);
 
 //ADD STUDENT RESPONSE ROUTE
 /**
@@ -131,7 +120,6 @@ pollRoutes.post(
   student,
   addStudentResponse
 );
-
 
 //DELETE POLL ROUTE
 /**
