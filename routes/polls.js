@@ -16,18 +16,94 @@ import { protect, admin, student } from '../middlewares/auth.js';
 
 const pollRoutes = express.Router({ mergeParams: true });
 
+//GET ADMIN POLLS ROUTE
+/**
+ * @route
+ * @desc
+ * @body
+ * @returns
+ */
+pollRoutes.get('/polls/:adminId', protect, admin, getPolls);
+
+//CREATE POLL ROUTE
+/**
+ * @route
+ * @desc
+ * @body
+ * @returns
+ */
 pollRoutes.post('/polls/create', protect, admin, createPoll);
 
-pollRoutes.post('/polls/edit/:id', protect, admin, editPoll);
-
-pollRoutes.delete('/polls/delete/:id', protect, admin, deletePoll);
-
-pollRoutes.post('/polls/edit-ques/:id', protect, admin, editPollQues);
-
+//POPULATE POLL ROUTE
+/**
+ * @route
+ * @desc
+ * @body
+ * @returns
+ */
 pollRoutes.post('/polls/populate', protect, admin, populatePoll);
 
+//EDIT POLL ROUTE
+/**
+ * @route
+ * @desc
+ * @body
+ * @returns
+ */
+pollRoutes.post('/polls/edit/:id', protect, admin, editPoll);
+
+//EDIT POLL QUESTION ROUTE
+/**
+ * @route
+ * @desc
+ * @body
+ * @returns
+ */
+pollRoutes.post('/polls/edit-ques/:id', protect, admin, editPollQues);
+
+//FINALIZE POLL ROUTE
+/**
+ * @route
+ * @desc
+ * @body
+ * @returns
+ */
+pollRoutes.get('/polls/finalize/:id', protect, admin, createResponse);
+
+//GET POLL DETAILS ROUTE
+/**
+ * @route
+ * @desc
+ * @body
+ * @returns
+ */
+pollRoutes.get('/polls/details/:id', protect, admin, getDetails);
+
+//GET STUDENT POLLS ROUTE
+/**
+ * @route
+ * @desc
+ * @body
+ * @returns
+ */
 pollRoutes.get('/polls/student', protect, student, getStudentPolls);
 
+//GET QUESTIONS ROUTE
+/**
+ * @route
+ * @desc
+ * @body
+ * @returns
+ */
+pollRoutes.get('/polls/ques/:id', protect, student, getQues);
+
+//ADD STUDENT RESPONSE ROUTE
+/**
+ * @route
+ * @desc
+ * @body
+ * @returns
+ */
 pollRoutes.post(
   '/polls/student/response/:pollId',
   protect,
@@ -35,12 +111,13 @@ pollRoutes.post(
   addStudentResponse
 );
 
-pollRoutes.get('/polls/:adminId', protect, admin, getPolls);
-
-pollRoutes.get('/polls/details/:id', protect, admin, getDetails);
-
-pollRoutes.get('/polls/finalize/:id', protect, admin, createResponse);
-
-pollRoutes.get('/polls/ques/:id', protect, getQues);
+//DELETE POLL ROUTE
+/**
+ * @route
+ * @desc
+ * @body
+ * @returns
+ */
+pollRoutes.delete('/polls/delete/:id', protect, admin, deletePoll);
 
 export default pollRoutes;
