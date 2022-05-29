@@ -195,6 +195,7 @@ export const addStudentResponse = async (request, response) =>{
 }
 
 export const getStudentPolls = async (request, response) => {
+    console.log(request)
     let groupMap = {
         'DD Hostel':{status: 'Hostellite'},
         'DD Student Affairs':{},
