@@ -112,6 +112,7 @@ export const deletePoll = async (request, response) => {
         console.log(request.params);
         await Poll.deleteOne({_id: new ObjectId(request.params.id)});
         await PollQues.deleteOne({poll: new ObjectId(request.params.id)});
+        await pollResponse.deleteOne({poll: new ObjectId(request.params.id)});
         response.status(200).send('Deleted');
     } catch (error) {
         response.status(200).send(error);
