@@ -294,7 +294,7 @@ describe('Tests', function() {
     await driver.findElement(By.id("password")).sendKeys("hello123#")
     await driver.findElement(By.id("password")).sendKeys(Key.ENTER)
     await driver.findElement(By.css(".no-fill")).click()
-    await driver.findElement(By.css(".base2:nth-child(5) img")).click()
+    await driver.findElement(By.css(".base2:nth-child(13) img")).click()
     {
       const element = await driver.findElement(By.id("mui-1-T-1"))
       await driver.actions({ bridge: true }).move(element).perform()
