@@ -17,11 +17,7 @@ const protect = async (req, res, next) => {
       
       next();
     } catch (err) {
-<<<<<<< Updated upstream
-      console.log('token failed');
-=======
       console.log("ERROR")
->>>>>>> Stashed changes
       res.status(401).json({
         message: 'Not authorized, Token failed',
         success: false,

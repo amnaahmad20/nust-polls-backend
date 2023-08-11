@@ -1,0 +1,48 @@
+[
+    {
+      "student": "617dd8650e2e2a5d6b86c75e",
+      "graduateLevel": "UG",
+      "batch": "2020",
+      "degree": "Computer Science",
+      "section": "A",
+      "school": "School of Engineering",
+      "department": "Computer Science Department",
+      "status": "Hostellite",
+      "hostel": "Hostel A",
+      "transport": {
+        "pickAndDrop": true,
+        "route": "Route 1"
+      },
+      "societies": [
+        {
+          "name": "Debating Society",
+          "designation": "Member"
+        },
+        {
+          "name": "Sports Club",
+          "designation": "Captain"
+        }
+      ]
+    },
+    {
+      "student": "617dd8650e2e2a5d6b86c75e",
+      "graduateLevel": "MS",
+      "batch": "2019",
+      "degree": "Electrical Engineering",
+      "section": "B",
+      "school": "School of Engineering",
+      "department": "Electrical Engineering Department",
+      "status": "Dayscholar",
+      "transport": {
+        "pickAndDrop": false,
+        "route": ""
+      },
+      "societies": [
+        {
+          "name": "Robotics Club",
+          "designation": "President"
+        }
+      ]
+    }
+  ]
+  

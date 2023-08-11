@@ -1,0 +1,13 @@
+[
+    {
+      "firstName": "John",
+      "lastName": "Doe",
+      "email": "johndoe@example.com",
+      "username": "johndoe",
+      "password": "password123",
+      "role": "student",
+      "resetPasswordToken": null,
+      "resetPasswordExpire": null
+    }
+  ]
+  

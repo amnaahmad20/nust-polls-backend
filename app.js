@@ -11,6 +11,7 @@ import User from './models/user.js';
 import userRoutes from './routes/users.js';
 import pollRoutes from './routes/polls.js';
 
+
 //APP CONFIG
 
 dotenv.config({ path: '.env' });
@@ -21,6 +22,8 @@ app.use(
     origin: process.env.FRONTEND_BASE_URL,
   })
 );
+console.log(process.env.EMAIL_USERNAME);
+console.log(process.env.CONNECTION_URL);
 app.use(morgan('tiny'));
 app.use(cors());
 

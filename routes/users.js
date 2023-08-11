@@ -3,6 +3,7 @@ import {
   loginUser,
   forgotPassword,
   resetPassword,
+  registerUser,
 } from '../controllers/users.js';
 // import { protect } from '../middlewares/auth.js';
 
@@ -10,6 +11,16 @@ import {
 // import { userSubgroups, pollAudience } from '../middlewares/userGroups.js';
 
 const router = express.Router({ mergeParams: true });
+
+//LOGIN ROUTE
+/**
+ * @route    POST /user/register
+ * @desc     register user with username password and role
+ * @body     {username, password,role}, both should be non empty
+ * @returns  response with user information and token in case of success (200)
+ *           and error message in case of failure (404 or 500)
+ */
+router.post('/register', registerUser);
 
 //LOGIN ROUTE
 /**

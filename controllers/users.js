@@ -6,6 +6,89 @@ import Admin from '../models/admin.js';
 import Student from '../models/student.js';
 import sendEmail from '../utils/sendEmail.js';
 
+// REGISTER CONTROLLER
+
+const registerUser = async (req, res) => {
+  try {
+    const { username, firstName, lastName, email, password, role } = req.body;
+
+    // Check if the email already exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(409).json({
+        message: 'Email already exists',
+        success: false,
+      });
+    }
+
+    let newUser;
+    let userModel;
+
+    if (role === 'admin') {
+      const { title } = req.body;
+
+      // Create a new admin
+      newUser = new User({ username, firstName, lastName, email, password, role });
+      await newUser.save();
+
+      // Create a new admin instance
+      const newAdmin = new Admin({ admin: newUser._id, title });
+      await newAdmin.save();
+
+      userModel = Admin;
+    } else if (role === 'student') {
+      const { graduateLevel, batch, degree, section, school, department, status, hostel, transport, societies } = req.body;
+
+      // Create a new student
+      newUser = new User({ username, firstName, lastName, email, password, role });
+      await newUser.save();
+
+      // Create a new student instance
+      const newStudent = new Student({
+        student: newUser._id,
+        graduateLevel,
+        batch,
+        degree,
+        section,
+        school,
+        department,
+        status,
+        hostel,
+        transport,
+        societies,
+      });
+      await newStudent.save();
+
+      userModel = Student;
+    } else {
+      return res.status(400).json({
+        message: 'Invalid role',
+        success: false,
+      });
+    }
+
+    // Send a welcome email
+    const message = `Welcome to our platform! Your registration is successful.`;
+    try {
+      await sendEmail({
+        to: email,
+        subject: 'Registration Successful',
+        text: message,
+      });
+    } catch (err) {
+      console.error('Failed to send welcome email:', err);
+    }
+
+    res.status(201).json({
+      message: 'User registered successfully',
+      success: true,
+    });
+  } catch (err) {
+    res.status(500).json({ message: err.message, success: false });
+  }
+};
+
+
 //LOGIN CONTROLLER
 
 const loginUser = async (req, res, next) => {
@@ -134,4 +217,4 @@ const resetPassword = async (req, res) => {
   }
 };
 
-export { loginUser, forgotPassword, resetPassword };
+export { loginUser, forgotPassword, resetPassword, registerUser };
