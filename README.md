@@ -16,4 +16,4 @@ To use this project, follow the steps:
  - Clone the repository.
  - Type "npm install" in the terminal.
  - Create config.env file, and write environment variables in it e.g: CONNECTION_URL = connection-url-here
- - Type "npm run dev" in the terminal to start the server.
+ - Type "yarn dev" in the terminal to start the server.
